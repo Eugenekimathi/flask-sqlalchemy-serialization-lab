@@ -1,7 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from sqlalchemy.ext.associationproxy import association_proxy
-from marshmallow import Schema, fields
+from marshmallow import fields
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 metadata = MetaData(naming_convention={
@@ -48,3 +49,44 @@ class Review(db.Model):
 
     customer = db.relationship ("Customer", back_populates= 'reviews')
     item = db.relationship ("Item", back_populates='reviews')
+
+
+# -----------------------
+# Schemas
+# -----------------------
+   
+
+class CustomerSchema(SQLAlchemyAutoSchema):
+
+    class Meta:
+        model = Customer
+        load_instance = True
+        include_relationships = True
+
+    id = fields.Int()
+    name = fields.Str()
+    reviews = fields.Nested("ReviewSchema", many=True, exclude=("customer","item"))
+
+class ItemSchema(SQLAlchemyAutoSchema):
+
+    class Meta:
+        model = Item
+        load_instance = True
+        include_relationships =True
+
+    id = fields.Int()
+    name = fields.Str()
+    price = fields.Float()
+    reviews = fields.Nested("ReviewSchema", many=True, exclude=("item","customer"))
+
+class ReviewSchema(SQLAlchemyAutoSchema):
+
+    class Meta:
+        model = Review
+        load_instance = True
+        include_relationships =True
+
+    id = fields.Int()
+    comment = fields.Str()
+    customer = fields.Nested("CustomerSchema", exclude=("reviews",))
+    item = fields.Nested("ItemSchema", exclude=("reviews",))    

@@ -2,7 +2,7 @@ from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 from app import db
-from models import Customer , Item , Review
+from models import *
 
 class CustomerSchema(SQLAlchemyAutoSchema):
 
@@ -30,7 +30,7 @@ class ReviewSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Review
         load_instance = True
-        
+
     id = fields.Int()
     comment = fields.Str()
     customer = fields.Nested("CustomerSchema", exclude=("reviews","items"))
