@@ -56,37 +56,37 @@ class Review(db.Model):
 # -----------------------
    
 
-class CustomerSchema(SQLAlchemyAutoSchema):
+# class CustomerSchema(SQLAlchemyAutoSchema):
 
-    class Meta:
-        model = Customer
-        load_instance = True
-        include_relationships = True
+#     class Meta:
+#         model = Customer
+#         load_instance = True
+#         include_relationships = True
 
-    id = fields.Int()
-    name = fields.Str()
-    reviews = fields.Nested("ReviewSchema", many=True, exclude=("customer","item"))
+#     id = fields.Int()
+#     name = fields.Str()
+#     reviews = fields.Nested("ReviewSchema", many=True, exclude=("customer","item"))
 
-class ItemSchema(SQLAlchemyAutoSchema):
+# class ItemSchema(SQLAlchemyAutoSchema):
 
-    class Meta:
-        model = Item
-        load_instance = True
-        include_relationships =True
+#     class Meta:
+#         model = Item
+#         load_instance = True
+#         include_relationships =True
 
-    id = fields.Int()
-    name = fields.Str()
-    price = fields.Float()
-    reviews = fields.Nested("ReviewSchema", many=True, exclude=("item","customer"))
+#     id = fields.Int()
+#     name = fields.Str()
+#     price = fields.Float()
+#     reviews = fields.Nested("ReviewSchema", many=True, exclude=("item","customer"))
 
-class ReviewSchema(SQLAlchemyAutoSchema):
+# class ReviewSchema(SQLAlchemyAutoSchema):
 
-    class Meta:
-        model = Review
-        load_instance = True
-        include_relationships =True
+#     class Meta:
+#         model = Review
+#         load_instance = True
+#         include_relationships =True
 
-    id = fields.Int()
-    comment = fields.Str()
-    customer = fields.Nested("CustomerSchema", exclude=("reviews",))
-    item = fields.Nested("ItemSchema", exclude=("reviews",))    
+#     id = fields.Int()
+#     comment = fields.Str()
+#     customer = fields.Nested("CustomerSchema", exclude=("reviews",))
+#     item = fields.Nested("ItemSchema", exclude=("reviews",))    
